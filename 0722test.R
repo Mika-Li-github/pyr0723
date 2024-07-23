@@ -184,4 +184,4 @@ results
 
 
 #MAF, ref allele, minor allele搞定(rs71559680)
-
+#.....haha, very funny.
