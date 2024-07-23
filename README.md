@@ -1,4 +1,3 @@
 Can you hear me?
 
-Not really.
-
+yes, I can.
