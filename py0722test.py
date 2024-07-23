@@ -19,9 +19,11 @@ from pandasgwas.get_associations import get_associations_by_efo_trait
 associations = get_associations_by_efo_trait('ankylosing spondylitis')
 
 #需要:associations、variants
+'''
 type(associations.raw_data)
 associations.raw_data[0]['orPerCopyNum']
 associations.raw_data[0]['pvalue']
+
 
 data = {
     'orPerCopyNum': associations.raw_data[0]['orPerCopyNum'],
@@ -30,7 +32,6 @@ data = {
 
 df = pd.DataFrame([data])
 print(df)
-
 
 associations.loci
 
@@ -51,6 +52,7 @@ duplicate_indices = associations.strongest_risk_alleles[associations.strongest_r
 print(duplicate_indices)
 #重複的有Index([349, 350, 351, 352], dtype='int64')，可行
 
+'''
 # 假设 associations.strongest_risk_alleles 是一个 DataFrame
 # 提取 associationId 和 riskAlleleName 列
 new_df = associations.strongest_risk_alleles[['associationId', 'riskAlleleName']].copy()
@@ -66,4 +68,4 @@ merged_df = pd.merge(new_df, associations_subset, on='associationId', how='left'
 # 输出合并后的 DataFrame
 print(merged_df)
 
-associations.associations.at[425,"orPerCopyNum"]
+associations.associations["orPerCopyNum"]
