@@ -1,24 +1,24 @@
 library(biomaRt)
 library(BiocManager)
-listMarts()
+# listMarts()
 
 
-ENSEMBL_MART_ENSEMBL <- useMart("ENSEMBL_MART_ENSEMBL")
-listDatasets(mart = ENSEMBL_MART_ENSEMBL)
-searchDatasets(mart = ENSEMBL_MART_ENSEMBL, pattern = "GRCh38.p14")
+# ENSEMBL_MART_ENSEMBL <- useMart("ENSEMBL_MART_ENSEMBL")
+# listDatasets(mart = ENSEMBL_MART_ENSEMBL)
+# searchDatasets(mart = ENSEMBL_MART_ENSEMBL, pattern = "GRCh38.p14")
 #80 hsapiens_gene_ensembl Human genes (GRCh38.p14) GRCh38.p14
 
 ENSEMBL_MART_SNP <- useMart("ENSEMBL_MART_SNP")
-listDatasets(mart = ENSEMBL_MART_SNP)
-searchDatasets(mart = ENSEMBL_MART_SNP, pattern = "GRCh38.p14")
+# listDatasets(mart = ENSEMBL_MART_SNP)
+# searchDatasets(mart = ENSEMBL_MART_SNP, pattern = "GRCh38.p14")
 #12           hsapiens_snp         Human Short Variants (SNPs and indels excluding flagged variants) (GRCh38.p14) GRCh38.p14
 
-ensemblGenes <- useMart("ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl")
-listAttributes(mart = ensemblGenes)
-searchAttributes(mart = ensemblGenes, pattern = "entrez")
-searchAttributes(mart = ensemblGenes, pattern = "ensembl_gene_")
+# ensemblGenes <- useMart("ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl")
+# listAttributes(mart = ensemblGenes)
+# searchAttributes(mart = ensemblGenes, pattern = "entrez")
+# searchAttributes(mart = ensemblGenes, pattern = "ensembl_gene_")
 #3021         ensembl_gene_id         Gene stable ID          snp
-searchAttributes(mart = ensemblGenes, pattern = "snp")
+# searchAttributes(mart = ensemblGenes, pattern = "snp")
 #較相關的如下
 #                                                               name                             description        page
 # 3021                                               ensembl_gene_id                          Gene stable ID         snp
@@ -44,7 +44,7 @@ searchAttributes(mart = ensemblGenes, pattern = "snp")
 
 
 ensemblSNP <- useMart("ENSEMBL_MART_SNP", dataset = "hsapiens_snp")
-searchAttributes(mart = ensemblSNP, pattern = "snp")
+# searchAttributes(mart = ensemblSNP, pattern = "snp")
 #較相關的如下
 #                               name                                     description      page
 # 1                        refsnp_id                                    Variant name       snp
@@ -89,7 +89,7 @@ searchAttributes(mart = ensemblSNP, pattern = "snp")
 # 42 ensembl_transcript_chrom_strand                               Transcript strand       snp
 # 43                    ensembl_type                                         Biotype       snp
 
-listFilters(mart = ensemblSNP)
+# listFilters(mart = ensemblSNP)
 #較為實用:
 #11                snp_filter                              Filter by Variant mame (e.g. rs123, CM000001)
 
@@ -165,23 +165,49 @@ SNP_table <- getBM(
   )
 )
 SNP_table
+#把要的挑出來
+# "refsnp_id",
+# "refsnp_source",
+# "chr_name",
+# "chrom_start",
+# "chrom_end",
+# "chrom_strand",
+# "allele",
+# "allele_1",
+# "minor_allele",
+# "minor_allele_freq",
+# "minor_allele_count",
+# "variation_names",
+# "source_name",
+# "associated_gene",
+# "associated_variant_risk_allele",
+# "p_value",
+# "ensembl_gene_stable_id",
+# "ensembl_gene_name",
+# "ensembl_transcript_stable_id",
+# "ensembl_transcript_chrom_strand",
+# "ensembl_type",
+# "consequence_type_tv",
+# "consequence_allele_string",
+# "ensembl_peptide_allele",
+# "distance_to_transcript",
+# "snp"
 
 
 
 
-
-
-results <- getBM(attributes = c(
-  "ensembl_gene_name",  #entrenz id，沒有的可能要去tw biobank找，population找EAS就好
-  "allele", 
-  "minor_allele", 
-  "minor_allele_freq"
-), 
-filters = "snp_filter", 
-values = "rs4552569", 
-mart = snp)
-results
-
+# 
+# results <- getBM(attributes = c(
+#   "ensembl_gene_name",  #entrenz id，沒有的可能要去tw biobank找，population找EAS就好
+#   "allele", 
+#   "minor_allele", 
+#   "minor_allele_freq"
+# ), 
+# filters = "snp_filter", 
+# values = "rs4552569", 
+# mart = snp)
+# results
+# 
 
 #MAF, ref allele, minor allele搞定(rs71559680)
-#.....haha, very funny.
+
