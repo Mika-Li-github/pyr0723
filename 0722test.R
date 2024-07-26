@@ -1,7 +1,7 @@
 library(biomaRt)
 library(BiocManager)
 # listMarts()
-
+#browseVignettes("biomaRt")
 
 # ENSEMBL_MART_ENSEMBL <- useMart("ENSEMBL_MART_ENSEMBL")
 # listDatasets(mart = ENSEMBL_MART_ENSEMBL)
@@ -96,7 +96,7 @@ ensemblSNP <- useMart("ENSEMBL_MART_SNP", dataset = "hsapiens_snp")
 SNP_table <- getBM(
   mart = ensemblSNP,
   filters = "snp_filter", 
-  values = "rs3124998", 
+  values = c("rs3124998", "rs10995271"), 
   attributes = c(
     "refsnp_id",
     "refsnp_source",
@@ -195,7 +195,6 @@ SNP_table
 
 
 
-
 # 
 # results <- getBM(attributes = c(
 #   "ensembl_gene_name",  #entrenz id，沒有的可能要去tw biobank找，population找EAS就好
@@ -210,4 +209,5 @@ SNP_table
 # 
 
 #MAF, ref allele, minor allele搞定(rs71559680)
+
 

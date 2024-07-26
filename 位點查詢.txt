@@ -1,0 +1,121 @@
+20240716:
+在GWAS Catalog查詢ankylosing spondylitis，網頁發生錯誤跑不出來(EFO_0003898)
+所以去Ensembl genome browser 112
+Favourite genomes 選 Homo_sapiens Human GRCh38.p14
+直接搜尋ankylosing spondylitis，點選ankylosing spondylitis (Human Phenotype)
+出現Loci associated with ankylosing spondylitis (EFO:0003898)
+(網址:
+https://asia.ensembl.org/Homo_sapiens/Phenotype/Locations?oa=EFO:0003898
+)
+匯出表格後複製Name(s)(是rsID)貼上至位點挑選資訊表dbSNP ID
+複製Annotation source貼上至位點挑選資訊表Original Source
+因為Genomic location (strand)裡面有不是數字的strand, 而且position似乎不是後面的數字(有一觀測值rs71559680
+有兩個數值)
+所以也許Genomic location (strand)不完全等於Chromosome	Position?
+其他資訊要另外查
+如果結果相當於GWAS Cat 的ankylosing spondylitis(EFO_0003898)，接下來試著填表格
+先確認dbSNP ID是否有重複，有的話就把不是數字strand的刪掉，那是plasmid的seq
+可以直接用它的Genomic location (strand)
+進度:把重複的都隱藏了
+========================================
+20240717:
+pandasgwas.Browser是打開瀏覽器
+
+Association 結構長這樣:
+Association has 6 DataFrames with hierarchical dependencies.
+associations
+|
+ -loci
+|
+ -strongext_risk_alleles
+|
+ -author_reported_genes
+    |
+     -ensembl_gene_ids
+    |
+     -entrez_gene_ids
+
+2. 如何透過基因進行搜尋？
+您可以在主搜尋欄中搜尋基因，例如。統計4。這將返回任何匹配的基因，以及透過映射管道用該基因註釋的變體。結果也可能包括標題中帶有基因名稱的出版物。
+
+「基因」頁面提供了映射到該基因的所有關聯的清單以及其他基因特異性數據。有關我們如何將變異映射到基因的詳細信息，請參閱下面的基因組映射。請注意，這可能並不總是與作者報告的給定變異的基因匹配，因為他們可能使用不同的標準。
+
+作者報告的基因可以在完整數據下載中找到。在 Excel 中開啟檔案並將您感興趣的基因的篩選器套用到「報告基因」欄位將使您能夠提取該基因中的所有關聯。
+
+您也可以使用我們的REST API傳回特定基因或基因組區域的關聯。
+
+
+df.iat[1,2]
+out: 20
+df.at[3,'A']
+out: 2
+df.loc[[1,3],['B','C']]
+df.iloc[[1,3],[1,2]]
+
+進度:打算把沒有的灰格子找來源，另外還要釐清population和其他變量代表甚麼，之後寫程式把426個GWAS的填到表格上，再和ensemble的比對看有沒有重複的
+========================================
+20240718:
+需要的項:
+ref allele
+minor allele (Alternative)
+MAF (minor allele frequency)
+Population
+人種
+
+當然，這裡有幾個可以考慮的 Ensembl Genome Browser API，特別是用於 Python 的 SNP 查詢：
+
+1. **Ensembl REST API**:
+   Ensembl 提供了一個強大的 REST API，可以用來查詢基因、SNP、轉錄本等信息。你可以使用 Python 中的 requests 或者其他 HTTP 請求庫來與此 API 進行通信。這是一個非常靈活和廣泛使用的選項。
+
+2. **BioMart API**:
+   Ensembl 的 BioMart 提供了一個更結構化的方式來查詢數據。它允許你通過 Web 介面選擇需要的數據集和篩選條件，然後導出為特定格式（如 CSV）。雖然它主要是用於批量查詢和下載數據，但也可以通過 Python 語言庫來訪問，以便於自動化和程序化查詢。
+
+3. **PyEnsembl API**:
+   PyEnsembl 是一個 Python 庫，它提供了對 Ensembl 數據的本地訪問。這意味著你可以在本地計算機上快速查詢 Ensembl 數據庫，而不必通過網絡來訪問。它可能需要更多的配置和空間來設置 Ensembl 數據庫的本地副本，但對於需要大量查詢的場景，這是一個有價值的選項。
+
+這些選項都可以根據你的具體需求來選擇。如果你需要即時且動態的數據查詢，Ensembl REST API 是一個不錯的選擇；如果你需要對多種數據進行複雜篩選並自動化這些過程，則 BioMart 是一個好的選擇；如果你需要在本地進行高效的查詢，則可以考慮使用 PyEnsembl。
+
+
+(....反正我遲早要用biomart，就先試試看吧)
+
+
+
+在Python中，與R中的tidyverse類似的套件集合是被稱為「tidyverse-equivalent」或「tidyverse-like」的套件。這些套件通常設計用於數據處理、分析和可視化，強調易於使用、一致性和可讀性。以下是幾個主要的Python套件，可以提供與tidyverse類似的功能和風格：
+
+1. **pandas**:
+   pandas 是Python中最流行的數據分析庫之一，它提供了類似於tidyverse中的dplyr和tidyr功能。pandas允許你進行數據讀取、過濾、轉換、合併等操作，並具有強大的索引和分組功能。它的用法和tidyverse中的dplyr有些類似，使得進行數據整理和分析變得直觀和便捷。
+
+2. **matplotlib** 和 **seaborn**:
+   matplotlib 是Python中最基本的繪圖庫，用於繪製各種靜態圖形。而 seaborn 則是在matplotlib基礎上進行了更高級別的封裝，提供了更美觀和方便的統計圖形繪製功能。這兩個庫的使用方式與ggplot2在tidyverse中的用法相似，尤其是在控制和定制圖形外觀方面。
+
+3. **numpy** 和 **scipy**:
+   numpy 提供了Python中用於數值計算的基本功能，包括多維數組操作、數學函數等。scipy 延伸了numpy的功能，提供了更多高級的數學、科學和工程計算功能。這些庫與tidyverse中的purrr等函數式編程工具有些相似，用於處理數組和數據。
+
+4. **plotly** 和 **plotnine**:
+   plotly 是一個互動式繪圖庫，支持在Python中創建多種類型的動態和互動圖形。plotnine 則是基於ggplot2概念的Python繪圖庫，提供了類似於ggplot2的語法和功能。這兩個庫可以用來實現tidyverse中ggplot2的繪圖風格和功能。
+
+這些Python套件組合通常被認為是「tidyverse-equivalent」，因為它們提供了類似的數據處理和可視化工具，同時也重視代碼的可讀性和易用性。根據具體任務和個人喜好，你可以選擇使用這些套件中的一些或多個來實現與tidyverse類似的工作流程。
+
+
+人種要在...這裡:
+https://weitinglin.com/2016/02/24/ensembl-api%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E7%B0%A1%E4%BB%8B/
+(為了人種，打開新世界perl的大門)
+
+=======================
+20240726:
+【Ensembl Genome 112 的人類SNP資料和Ensembl Variation 112 的人類SNP資料一樣嗎?】
+要去查一下他們的註釋(在BiomaRt)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
