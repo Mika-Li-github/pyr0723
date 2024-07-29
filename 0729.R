@@ -1,3 +1,4 @@
+library(tidyverse)
 library(biomaRt)
 library(BiocManager)
 
@@ -59,5 +60,77 @@ print(results)
 #在工作表「不想重複」，我把snp交互作用的分開算成兩個位點
 #當前有382個rsId
 
+######382SNPs#######
+#先把那些SNP召喚進來吧
+#getwd()
+#setwd("C:/Users/mikali/Desktop/gitfamily")
+asPandasGWAS <- read_csv("asPandasGWAS.csv")
+ensembl_export_LociAssociatedWithAnkylosingSpondylitis <- read_csv("ensembl-export_Loci associated with Ankylosing spondylitis.csv")
+gwas_association_downloaded_2024_07_26_EFO_0003898 <- read_csv("gwas-association-downloaded_2024-07-26-EFO_0003898.csv")
 
 
+# 找出重複的 dbSNPID
+duplicates <- asPandasGWAS %>%
+  group_by(dbSNPID) %>%
+  summarise(count = n()) %>%
+  filter(count > 1)
+
+# 提取所有重複的觀測值
+result <- asPandasGWAS %>%
+  filter(dbSNPID %in% duplicates$dbSNPID)
+
+# 查看結果
+print(result, n = 85)
+
+# 按照 orPerCopyNum 進行降序排列
+sorted_data <- result %>%
+  arrange(desc(dbSNPID))
+
+# 查看結果
+print(sorted_data, n = 85)
+
+
+
+# 找出重複的 Name(s)
+duplicates <- ensembl_export_LociAssociatedWithAnkylosingSpondylitis %>%
+  group_by(`Name(s)`) %>%
+  summarise(count = n()) %>%
+  filter(count > 1)
+
+# 提取所有重複的觀測值
+result <- ensembl_export_LociAssociatedWithAnkylosingSpondylitis %>%
+  filter(`Name(s)` %in% duplicates$`Name(s)`)
+
+# 查看結果
+print(result, n = 62)
+
+# 按照 orPerCopyNum 進行降序排列
+sorted_data <- result %>%
+  arrange(desc(`Name(s)`))
+
+# 查看結果
+print(sorted_data, n = 62)
+
+
+
+
+# 找出重複的 SNPS
+duplicates <- gwas_association_downloaded_2024_07_26_EFO_0003898 %>%
+  group_by(SNPS) %>%
+  summarise(count = n()) %>%
+  filter(count > 1)
+
+# 提取所有重複的觀測值
+result <- gwas_association_downloaded_2024_07_26_EFO_0003898 %>%
+  filter(SNPS %in% duplicates$SNPS)
+
+# 查看結果
+print(result,SNPS)
+
+# 按照 orPerCopyNum 進行降序排列
+sorted_data <- result %>%
+  arrange(desc(SNPS))
+
+# 查看結果
+print(sorted_data, n = 81)
+#我覺得pandas可以再補完整一點
