@@ -1,0 +1,50 @@
+"","name","description","page"
+"1","refsnp_id","Variant name","snp"
+"2","refsnp_source","Variant source","snp"
+"3","refsnp_source_description","Variant source description","snp"
+"4","chr_name","Chromosome/scaffold name","snp"
+"5","chrom_start","Chromosome/scaffold position start (bp)","snp"
+"6","chrom_end","Chromosome/scaffold position end (bp)","snp"
+"7","chrom_strand","Strand","snp"
+"8","allele","Variant alleles","snp"
+
+"10","validated","Variant supporting evidence","snp"
+"11","allele_1","Ancestral allele","snp"
+"12","minor_allele","Minor allele (ALL)","snp"
+"13","minor_allele_freq","Global minor allele frequency (all individuals)","snp"
+"14","minor_allele_count","Global minor allele count (all individuals)","snp"
+"15","clinical_significance","Clinical significance","snp"
+
+"19","variation_names","Associated variant names","snp"
+"20","study_name","Study name","snp"
+"21","study_type","Study type","snp"
+"22","study_external_ref","Study External Reference","snp"
+"23","study_description","Study Description","snp"
+"24","source_name","Source name","snp"
+"25","associated_gene","Associated gene with phenotype","snp"
+"26","phenotype_name","Phenotype name","snp"
+"27","phenotype_description","Phenotype description","snp"
+"28","associated_variant_risk_allele","Associated variant risk allele","snp"
+"29","p_value","P value","snp"
+"30","set_name","Variant Set Name","snp"
+"31","set_description","Variant Set Description","snp"
+
+
+"39","ensembl_gene_stable_id","Gene stable ID","snp"
+"40","ensembl_gene_name","Gene Name","snp"
+
+"43","ensembl_type","Biotype","snp"
+"44","consequence_type_tv","Variant consequence","snp"
+"45","consequence_allele_string","Consequence specific allele","snp"
+
+"49","translation_start","Variant start in translation (aa)","snp"
+"50","translation_end","Variant end in translation (aa)","snp"
+"51","cds_start","Variant start in CDS (bp)","snp"
+"52","cds_end","Variant end in CDS (bp)","snp"
+"53","distance_to_transcript","Distance to transcript","snp"
+
+
+"58","reg_feature_stable_id","Regulatory feature stable ID","snp"
+"59","reg_allele_string","Regulatory feature allele string","snp"
+"60","reg_consequence_types","Regulatory feature consequence type","snp"
+

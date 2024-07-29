@@ -154,5 +154,83 @@ getBM(
 
 listFilterOptions(mart = ensembl_s, filter = "phenotype_description")
 #怎麼沒有
-#用來查詢就好
+#用來查詢就好?
 
+## Use the Ensembl human genes dataset
+
+ensembl_s1 <- useEnsembl(biomart = "snps", dataset = "hsapiens_snp")
+
+## we can search for the name of a filter we're interested in e.g. 'phenotype'
+## we need to use the name of the filter in the next function
+searchFilters(ensembl_s1, pattern = "phenotype")
+
+## list all the options available to the 'phenotype_source' filter
+listFilterOptions(mart = ensembl_s1, filter = "phenotype_source")
+
+## search the 'phenotype_description' filter for the term 'as'
+searchFilterOptions(mart = ensembl_s1,
+                    filter = "phenotype_description",
+                    pattern = "as")
+#還是不行
+listFilters(ensembl_s)
+
+listFilters(ensembl_g)
+searchFilters(ensembl_g, pattern = "pheno")
+listFilterOptions(mart = ensembl_g, filter = "phenotype_description")
+searchFilterOptions(mart = ensembl_g, filter = "phenotype_description", pattern = "ank")
+#有耶
+searchFilterOptions(mart = ensembl_s, filter = "phenotype_description", pattern = "ank")
+
+listAttributes(ensembl_s)
+
+library(biomaRt)
+
+# 连接到Ensembl数据库
+ensembl <- useEnsembl(biomart = "ENSEMBL_MART_SNP", dataset = "hsapiens_snp")
+
+# 检查可用的过滤器
+filters <- listFilters(ensembl)
+print(filters)
+
+# 列出phenotype_description过滤器的选项
+options <- listFilterOptions(ensembl, "phenotype_description")
+print(options)
+
+# 使用phenotype_description过滤器查询
+results <- getBM(attributes = c('refsnp_id', 'phenotype_description', 'phenotype_source'),
+                 filters = 'phenotype_description',
+                 values = 'Ankylosing spondylitis',
+                 mart = ensembl)
+
+print(results)
+#還是那78個，好窩
+listAttributes(mart = ensembl)
+listAttributes(mart = ensembl_s1)
+
+searchAttributes(mart = ensembl, pattern = "phe")
+searchAttributes(mart = ensembl_s1, pattern = "phe")
+
+results <- getBM(attributes = c('refsnp_id', 'phenotype_description', 'phenotype_name'),
+                 filters = 'phenotype_description',
+                 values = 'Ankylosing spondylitis',
+                 mart = ensembl)
+
+print(results)
+
+results <- getBM(attributes = c('refsnp_id', 'phenotype_description', 'phenotype_name','validated'),
+                 filters = 'phenotype_description',
+                 values = 'Ankylosing spondylitis',
+                 mart = ensembl_s1)
+
+print(results)
+#雖然都沒有寫來源，我還是想看是哪78個
+resultsS <- getBM(attributes = c('refsnp_id', 'phenotype_description', 'phenotype_name'),
+                 filters = 'phenotype_description',
+                 values = 'Ankylosing spondylitis',
+                 mart = ensembl_s1)
+
+print(resultsS)
+#write.csv(resultsS, file="as78biomaRt.csv")
+#除了rs55688811，其他都和pandasGWAS結果重複
+
+#先把想要的變數找出來，再看要怎麼比對
