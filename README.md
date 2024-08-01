@@ -12,3 +12,7 @@ pandasGWAS再抓一次，再刪除不在基因上的
 在ensemble發現了Phenotype/Disease/Trait這一欄，之後找大概有哪些，再擴大搜尋
 把GWAS查到的Traits，想要的都存下來了
 做好兩個bigPanda，現在要去R合併
+
+20240801:
+先手動刪除載體資料
+Asso沒有chr資料

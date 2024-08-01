@@ -142,7 +142,7 @@ print(bigPandA)
 bigPanDa_Asso = bigPandA
 bigPanDa_Snps = bigPanda
 
-'''
+
 import os
 
 # 獲取當前工作目錄
@@ -155,12 +155,10 @@ os.chdir('C:/Users/mikali/Desktop/gitfamily')
 
 files = os.listdir(current_directory)
 print("Files in Current Directory:", files)
-'''
+
 import pandas as pd
 # 假設 bigPandA 是您要寫入 CSV 的 DataFrame
 # 將 DataFrame 寫入 CSV 檔案
 bigPanDa_Asso.to_csv('bigPanDa_Asso.csv', index=False, encoding='utf-8')
 bigPanDa_Snps.to_csv('bigPanDa_Snps.csv', index=False, encoding='utf-8')
 
-#先來檢查哪些項是一樣的(Snps裡面)
-bigPanDa_Snps
